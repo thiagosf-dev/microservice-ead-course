@@ -9,10 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
 
@@ -40,5 +43,9 @@ public class LessonModel implements Serializable {
 	@Column(nullable = false)
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
 	private LocalDateTime creationDate;
+
+	@ManyToOne(optional = false)
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private ModuleModel module;
 
 }
