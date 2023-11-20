@@ -7,12 +7,16 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -44,11 +48,12 @@ public class ModuleModel
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
 	private LocalDateTime creationDate;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private CourseModel course;
 
-	@OneToMany(mappedBy = "module")
+	@OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SUBSELECT)
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private Set<LessonModel> lessons;
 
