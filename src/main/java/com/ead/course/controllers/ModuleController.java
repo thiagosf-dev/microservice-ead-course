@@ -9,6 +9,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,6 +28,7 @@ import com.ead.course.models.CourseModel;
 import com.ead.course.models.ModuleModel;
 import com.ead.course.services.CourseService;
 import com.ead.course.services.ModuleService;
+import com.ead.course.specifications.SpecificationTemplate;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -90,14 +94,18 @@ public class ModuleController {
 	}
 
 	@GetMapping(path = "/courses/{courseId}/modules")
-	public ResponseEntity<Object> getAllModules(@PathVariable(value = "courseId") UUID courseId) {
+	public ResponseEntity<Object> getAllModules(
+			@PathVariable(value = "courseId") UUID courseId,
+			SpecificationTemplate.ModuleSpec spec,
+			@PageableDefault(direction = Direction.ASC, page = 0, size = 10, sort = "moduleId") Pageable pageable) {
 		Optional<CourseModel> courseModelOptional = courseService.findById(courseId);
 
 		if (!courseModelOptional.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found.");
 		}
 
-		return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllByCourse(courseId));
+		return ResponseEntity.status(HttpStatus.OK).body(
+				moduleService.findAllByCourse(SpecificationTemplate.moduleCourseId(courseId).and(spec), pageable));
 	}
 
 	@GetMapping(path = "/courses/{courseId}/modules/{moduleId}")

@@ -6,13 +6,14 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.ead.course.models.ModuleModel;
 
 public interface ModuleRepository
-		extends JpaRepository<ModuleModel, UUID> {
+		extends JpaRepository<ModuleModel, UUID>, JpaSpecificationExecutor<ModuleModel> {
 
 	@EntityGraph(attributePaths = { "course" })
 	ModuleModel findByTitle(String title);

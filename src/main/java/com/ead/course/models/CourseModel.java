@@ -75,6 +75,6 @@ public class CourseModel
 	@Fetch(FetchMode.SUBSELECT)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonProperty(access = Access.WRITE_ONLY)
-	private Set<ModuleModel> models;
+	private Set<ModuleModel> modules;
 
 }
