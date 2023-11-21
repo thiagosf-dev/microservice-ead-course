@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### DOCKER AND DOCKER-COMPOSE ###
+
+### DB ###
+/pgdata/
