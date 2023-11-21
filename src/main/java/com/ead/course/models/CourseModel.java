@@ -62,11 +62,11 @@ public class CourseModel
 
 	@Column(nullable = false)
 	@Enumerated(value = EnumType.STRING)
-	private CourseStatus CourseStatus;
+	private CourseStatus courseStatus;
 
 	@Column(nullable = false)
 	@Enumerated(value = EnumType.STRING)
-	private com.ead.course.enums.CourseLevel CourseLevel;
+	private com.ead.course.enums.CourseLevel courseLevel;
 
 	@Column(nullable = false)
 	private UUID userInstructor;

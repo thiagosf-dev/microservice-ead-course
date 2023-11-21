@@ -7,6 +7,9 @@ import java.util.UUID;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.ead.course.models.CourseModel;
@@ -68,6 +71,11 @@ public class CourserServiceImpl
 	@Override
 	public List<CourseModel> findAll() {
 		return courseRepository.findAll();
+	}
+
+	@Override
+	public Page<CourseModel> findAllWithSpecification(Specification<CourseModel> courseSpec, Pageable pageable) {
+		return courseRepository.findAll(courseSpec, pageable);
 	}
 
 }
